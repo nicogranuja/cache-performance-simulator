@@ -8,7 +8,8 @@ from trace import Trace
 
 address_space = 32
 bytes_in_kb = 1024
-
+valid_bits = 1
+bits_per_byte = 8
 
 # Cache class gets initialized with the class Arguments and calculates the cache main implementation
 class Cache:
@@ -45,7 +46,7 @@ class Cache:
         return int(math.pow(2, self.get_index_size()) / bytes_in_kb)
 
     def get_imp_mem_size(self):
-        return "TODO"
+        return int(((math.pow(2, math.log2(self.get_total_blocks())) * bytes_in_kb) * (self.get_tag_size() + valid_bits)) / bits_per_byte)
 
     def get_hit_rate(self):
         return "TODO"
