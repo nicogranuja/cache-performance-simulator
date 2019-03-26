@@ -86,5 +86,5 @@ class Cache:
                 self.traces.append(Trace(length, address, src_m, dst_m))
 
     def print_traces(self, print_number):
-        for i in range(0, print_number-1):
+        for i in range(0, print_number):
             self.traces[i].print_trace_milestone_1()
