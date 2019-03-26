@@ -22,8 +22,8 @@ class Cache:
         print("------------------------------------------------------------------------------------")
         print("Cache Size: {} KB\nBlock Size: {} bytes\nAssociativity: {}\nPolicy: {}\n".format(
             self.args.cache_size, self.args.block_size, self.args.associativity, self.args.replacement_policy))
-        print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nImplementation Memory Size: {} bytes\n\nCache Hit Rate: {}%".format(
-            self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_imp_mem_size(), self.get_hit_rate()))
+        print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nImplementation Memory Size: {} bytes\nOverhead Size: {} bytes\nCache Hit Rate: {}%".format(
+            self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_imp_mem_size(), self.get_overhead_size(), self.get_hit_rate()))
 
     # Get offset bits
     def get_block_offset(self):
@@ -45,8 +45,13 @@ class Cache:
     def get_total_indices(self):
         return int(math.pow(2, self.get_index_size()) / bytes_in_kb)
 
-    def get_imp_mem_size(self):
+    #Get implementation size needed
+    def get_overhead_size(self):
         return int(((math.pow(2, math.log2(self.get_total_blocks())) * bytes_in_kb) * (self.get_tag_size() + valid_bits)) / bits_per_byte)
+
+    #Get overhead size
+    def get_imp_mem_size(self):
+        return int((self.args.cache_size + (math.pow(2, math.log2(self.get_total_blocks()))*bytes_in_kb)*(self.get_tag_size() + valid_bits / bits_per_byte)))
 
     def get_hit_rate(self):
         return "TODO"
