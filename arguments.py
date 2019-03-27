@@ -9,12 +9,16 @@ parser.add_argument("-f", dest="file", required=True,
 parser.add_argument("-s", dest="cache_size", type=int,
                     required=True, metavar="[1-8192]", help="Cache size in KB (1KB to 8MB)")
 parser.add_argument("-b", dest="block_size", type=int,
-                    choices=range(4, 65), metavar="[4-64]", required=True, help="Block size in bytes (4 bytes to 64 bytes)")
+                    choices=range(4, 65), metavar="[4-65]", required=True, help="Block size in bytes (4 bytes to 64 bytes)")
 parser.add_argument("-a", dest="associativity", type=int,
                     required=True, help="Associativity (1, 2, 3, 4, 8, 16)", choices=[1, 2, 3, 4, 8, 16])
 parser.add_argument("-r", dest="replacement_policy", required=True,
                     help="Replacement Policy (RR or RND or LRU)", choices=["RR", "RND", "LRU"])
 args_parser = parser.parse_args()
+
+if args_parser.cache_size > 8192 or args_parser.cache_size < 1:
+    print("Invalid range for the cache size expected 1 to 8192")
+    sys.exit(1)
 
 
 # Singleton class to only hold the arguments
