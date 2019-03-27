@@ -39,7 +39,9 @@ class Cache:
 
     # Get index bits
     def get_index_size(self):
-        return int(math.log2((self.args.cache_size * bytes_in_kb) / (self.args.associativity * math.pow(2, self.get_block_offset()))))
+        block_offset_size = math.pow(2, self.get_block_offset())
+        cache_size_bytes = self.args.cache_size * bytes_in_kb
+        return int(math.log2(cache_size_bytes / (self.args.associativity * block_offset_size)))
 
     # Get total indices
     def get_total_indices(self):
@@ -47,11 +49,13 @@ class Cache:
 
     #Get implementation size needed
     def get_overhead_size(self):
-        return int(self.get_total_blocks() * bytes_in_kb * (self.get_tag_size() + valid_bits) / bits_per_byte)
+        blocks_bytes = self.get_total_blocks() * bytes_in_kb
+        return int(blocks_bytes * (self.get_tag_size() + valid_bits) / bits_per_byte)
 
     #Get overhead size
     def get_imp_mem_size(self):
-        return int(((self.args.cache_size * bytes_in_kb) + self.get_total_blocks() * bytes_in_kb * (self.get_tag_size() + valid_bits / bits_per_byte)))
+        cache_size = (self.args.cache_size * bytes_in_kb)
+        return int((cache_size + self.get_overhead_size()))
 
     def get_hit_rate(self):
         return "TODO"
