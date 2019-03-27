@@ -31,7 +31,7 @@ class Cache:
 
     # Get blocks in KB
     def get_total_blocks(self):
-        return int(math.pow(2, self.args.block_size) / bytes_in_kb)
+        return int(self.args.cache_size / self.args.block_size)
 
     # Get tag bits
     def get_tag_size(self):
@@ -47,11 +47,11 @@ class Cache:
 
     #Get implementation size needed
     def get_overhead_size(self):
-        return int(((math.pow(2, math.log2(self.get_total_blocks())) * bytes_in_kb) * (self.get_tag_size() + valid_bits)) / bits_per_byte)
+        return int(self.get_total_blocks() * bytes_in_kb * (self.get_tag_size() + valid_bits) / bits_per_byte)
 
     #Get overhead size
     def get_imp_mem_size(self):
-        return int((self.args.cache_size + (math.pow(2, math.log2(self.get_total_blocks()))*bytes_in_kb)*(self.get_tag_size() + valid_bits / bits_per_byte)))
+        return int(((self.args.cache_size * bytes_in_kb) + self.get_total_blocks() * bytes_in_kb * (self.get_tag_size() + valid_bits / bits_per_byte)))
 
     def get_hit_rate(self):
         return "TODO"
