@@ -1,0 +1,41 @@
+Cache Simulator CS 3853 Spring 2019 – Group #1
+
+Cmd Line: C:\Github_Repos\cache-performance-simulator\main.py -f trace_files/Trace1.trc -s 8192 -b 32 -a 4 -r RR
+Trace File: trace_files/Trace1.trc
+Cache Size: 8192 KB
+Block Size: 32 bytes
+Associativity: 4-way
+R-Policy: RR
+
+0x7c81eb33: (1)
+0x7c81eb34: (1)
+0x7c81eb35: (3)
+0x78158e69: (1)
+0x78158e6a: (3)
+0x1763891: (1)
+0x1763892: (1)
+0x1763893: (1)
+0x1763894: (1)
+0x1763895: (1)
+0x1763896: (1)
+0x1763897: (1)
+0x1763898: (1)
+0x1763899: (1)
+0x176389a: (1)
+0x176389b: (1)
+0x176389c: (1)
+0x176389d: (1)
+0x176389e: (1)
+0x176389f: (1)
+------------------------------------------------------------------------------------
+Cache Size: 8192 KB
+Block Size: 32 bytes
+Associativity: 4
+Policy: RR
+
+Total # of Blocks: 256 KB
+Tag Size: 11 bits
+Index Size: 16, Total Indices: 64 KB
+Overhead Size: 393216 bytes
+Implementation Memory Size: 8781824 bytes
+Cache Hit Rate: TODO%
