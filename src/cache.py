@@ -110,14 +110,15 @@ class Cache:
 
                 trace = Trace(length, address, src_m, dst_m)
                 self.handle_trace(trace)
+                return
 
     def handle_trace(self, trace: Trace):
-        addr = Address(trace.address, self.block_offset_bits,
-                       self.index_bits, self.tag_bits)
-        src_m = Address(trace.src_m, self.block_offset_bits,
-                        self.index_bits, self.tag_bits)
-        dst_m = Address(trace.dst_m, self.block_offset_bits,
-                        self.index_bits, self.tag_bits)
+        addr = Address(trace.address, offset_bits=self.block_offset_bits,
+                       index_bits=self.index_bits, tag_bits=self.tag_bits)
+        src_m = Address(trace.src_m, offset_bits=self.block_offset_bits,
+                        index_bits=self.index_bits, tag_bits=self.tag_bits)
+        dst_m = Address(trace.dst_m, offset_bits=self.block_offset_bits,
+                        index_bits=self.index_bits, tag_bits=self.tag_bits)
 
         self.simulate_cache(addr, trace.length)
 
@@ -135,7 +136,8 @@ class Cache:
 
         else:
             # Save new index in dictionary
-            self.index_dict[addr.index] = Index(addr.tag)
+            self.index_dict[addr.index] = Index(
+                tag=addr.tag, associativity=self.args.associativity, rep_policy=self.args.replacement_policy)
             self.misses += 1
 
         self.total += 1
