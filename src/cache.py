@@ -12,6 +12,7 @@ address_space = 32
 bytes_in_kb = 1024
 valid_bits = 1
 bits_per_byte = 8
+default_address_length = 4
 
 # Cache class gets initialized with the class
 # Arguments and calculates the cache main implementation
@@ -124,9 +125,9 @@ class Cache:
 
         # If src_m and dst_m are valid addressess (greater than 00000000)
         if src_m.is_valid:
-            self.simulate_cache(src_m, 4)
+            self.simulate_cache(src_m, default_address_length)
         if dst_m.is_valid:
-            self.simulate_cache(dst_m, 4)
+            self.simulate_cache(dst_m, default_address_length)
 
     def simulate_cache(self, addr: Address, length_read_bytes):
         if addr.index in self.index_dict:
