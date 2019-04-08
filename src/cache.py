@@ -4,21 +4,34 @@ import sys
 import re
 
 from .arguments import Arguments
-from trace import Trace
+from .trace import Trace
+from .address import Address
+from .index import Index
 
 address_space = 32
 bytes_in_kb = 1024
 valid_bits = 1
 bits_per_byte = 8
 
-# Cache class gets initialized with the class Arguments and calculates the cache main implementation
+# Cache class gets initialized with the class
+# Arguments and calculates the cache main implementation
 
 
 class Cache:
-    traces = []
+    index_dict = {}
+    total = 0
+    hits = 0
+    misses = 0
+
+    block_offset_bits = 0
+    index_bits = 0
+    tag_bits = 0
 
     def __init__(self, args: Arguments):
         self.args = args
+        self.block_offset_bits = self.get_block_offset()
+        self.index_bits = self.get_index_size()
+        self.tag_bits = self.get_tag_size()
 
     def print_results(self):
         print("------------------------------------------------------------------------------------")
@@ -89,13 +102,55 @@ class Cache:
 
                 # Save matched data to the traces class element
                 length = int(regex1.group(1))
-                address = hex(int(regex1.group(2), base=16))
 
-                src_m = hex(int(regex2.group(1), base=16))
-                dst_m = hex(int(regex2.group(2), base=16))
+                # Convert string to hex number then format it with 32 binary numbers using 0 as padding
+                address = format(int(regex1.group(2), base=16), '032b')
+                src_m = format(int(regex2.group(1), base=16), '032b')
+                dst_m = format(int(regex2.group(2), base=16), '032b')
 
                 trace = Trace(length, address, src_m, dst_m)
                 self.handle_trace(trace)
 
     def handle_trace(self, trace: Trace):
-        pass
+        addr = Address(trace.address, self.block_offset_bits,
+                       self.index_bits, self.tag_bits)
+        src_m = Address(trace.src_m, self.block_offset_bits,
+                        self.index_bits, self.tag_bits)
+        dst_m = Address(trace.dst_m, self.block_offset_bits,
+                        self.index_bits, self.tag_bits)
+
+        self.simulate_cache(addr, trace.length)
+
+        # If src_m and dst_m are valid addressess (greater than 00000000)
+        if src_m.is_valid:
+            self.simulate_cache(src_m, 4)
+        if dst_m.is_valid:
+            self.simulate_cache(dst_m, 4)
+
+    def simulate_cache(self, addr: Address, length_read_bytes):
+        if addr.index in self.index_dict:
+            # Handle index already in the dictionary
+            index = self.index_dict[addr.index]
+            self.handle_index_in_dict(index, addr, length_read_bytes)
+
+        else:
+            # Save new index in dictionary
+            self.index_dict[addr.index] = Index(addr.tag)
+            self.misses += 1
+
+        self.total += 1
+
+    def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
+        # TODO figure out if tag exists for the index does the tag
+        # get appended or it doesn't affect the array at all
+        if index.has_tag(addr.tag):
+            # is a hit
+            self.hits += 1
+        else:
+            # is a miss
+            index.add_tag(addr.tag)
+            self.misses += 1
+
+        # TODO if it overlaps call simulate_cache again
+        if addr.index_overlaps(length_read_bytes):
+            pass
