@@ -11,7 +11,7 @@ parser.add_argument("-s", dest="cache_size", type=int,
 parser.add_argument("-b", dest="block_size", type=int,
                     choices=range(4, 65), metavar="[4-65]", required=True, help="Block size in bytes (4 bytes to 64 bytes)")
 parser.add_argument("-a", dest="associativity", type=int,
-                    required=True, help="Associativity (1, 2, 3, 4, 8, 16)", choices=[1, 2, 3, 4, 8, 16])
+                    required=True, help="Associativity (1, 2, 4, 8, 16)", choices=[1, 2, 4, 8, 16])
 parser.add_argument("-r", dest="replacement_policy", required=True,
                     help="Replacement Policy (RR or RND or LRU)", choices=["RR", "RND", "LRU"])
 args_parser = parser.parse_args()

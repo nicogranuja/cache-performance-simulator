@@ -1,5 +1,5 @@
-from arguments import Arguments
-from cache import Cache
+from src.cache import Cache
+from src.arguments import Arguments
 
 
 def main():
@@ -10,10 +10,6 @@ def main():
     cache.read_and_parse_trace_file()
 
     cache.print_results()
-    print("\n------------------------------------------------------------------------------------\n")
-    
-    # Milestone 1
-    cache.print_traces(20)
 
 
 if __name__ == "__main__":

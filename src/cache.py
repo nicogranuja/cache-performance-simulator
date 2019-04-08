@@ -3,7 +3,7 @@ import os.path as path
 import sys
 import re
 
-from arguments import Arguments
+from .arguments import Arguments
 from trace import Trace
 
 address_space = 32
@@ -12,6 +12,8 @@ valid_bits = 1
 bits_per_byte = 8
 
 # Cache class gets initialized with the class Arguments and calculates the cache main implementation
+
+
 class Cache:
     traces = []
 
@@ -23,7 +25,7 @@ class Cache:
         print("Cache Size: {} KB\nBlock Size: {} bytes\nAssociativity: {}\nPolicy: {}\n".format(
             self.args.cache_size, self.args.block_size, self.args.associativity, self.args.replacement_policy))
         print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {} bytes\nCache Hit Rate: {}%".format(
-            self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(),self.get_overhead_size(), self.get_imp_mem_size(), self.get_hit_rate()))
+            self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size(), self.get_hit_rate()))
 
     # Get offset bits
     def get_block_offset(self):
@@ -47,12 +49,12 @@ class Cache:
     def get_total_indices(self):
         return int(math.pow(2, self.get_index_size()) / bytes_in_kb)
 
-    #Get implementation size needed
+    # Get implementation size needed
     def get_overhead_size(self):
         blocks_bytes = self.get_total_blocks() * bytes_in_kb
         return int(blocks_bytes * (self.get_tag_size() + valid_bits) / bits_per_byte)
 
-    #Get overhead size
+    # Get overhead size
     def get_imp_mem_size(self):
         cache_size = (self.args.cache_size * bytes_in_kb)
         return int((cache_size + self.get_overhead_size()))
@@ -92,8 +94,8 @@ class Cache:
                 src_m = hex(int(regex2.group(1), base=16))
                 dst_m = hex(int(regex2.group(2), base=16))
 
-                self.traces.append(Trace(length, address, src_m, dst_m))
+                trace = Trace(length, address, src_m, dst_m)
+                self.handle_trace(trace)
 
-    def print_traces(self, print_number):
-        for i in range(0, print_number):
-            self.traces[i].print_trace_milestone_1()
+    def handle_trace(self, trace: Trace):
+        pass
