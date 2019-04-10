@@ -1,14 +1,16 @@
 class Index:
+    # TODO figure out tag class new structure
     tags = []
     associativity = 1
     rep_policy = 'RR'
+    replace_index = 0
 
     def __init__(self, tag='', associativity=1, rep_policy='RR'):
         self.tags.append(tag)
         self.associativity = associativity
         self.rep_policy = rep_policy
 
-    def add_tag(self, tag):
+    def add_or_replace_tag(self, tag):
         # If we just need to add the tag
         if len(self.tags) < self.associativity:
             self.tags.append(tag)
