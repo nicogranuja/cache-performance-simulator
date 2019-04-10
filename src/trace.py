@@ -11,8 +11,7 @@ class Trace:
         self.src_m = src_m
 
     def print_trace(self):
-        print("length: {}, address: {}, dst_m: {}, src_m: {}".format(
-            self.length, self.address, self.dst_m, self.src_m))
+        print("length: {}, address: {}, dst_m: {}, src_m: {}".format(self.length, self.address, self.dst_m, self.src_m))
 
     def print_trace_milestone_1(self):
         print("{}: ({})".format(self.address, self.length))

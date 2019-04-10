@@ -1,24 +1,29 @@
+from .tag import Tag
+
 class Index:
-    # TODO figure out tag class new structure
-    tags = []
+    # Dictionary of tags <tag, Tag>
+    tags = {}
     associativity = 1
     rep_policy = 'RR'
     replace_index = 0
 
     def __init__(self, tag='', associativity=1, rep_policy='RR'):
-        self.tags.append(tag)
+        self.tags[tag] = Tag(tag)
         self.associativity = associativity
         self.rep_policy = rep_policy
 
     def add_or_replace_tag(self, tag):
         # If we just need to add the tag
         if len(self.tags) < self.associativity:
-            self.tags.append(tag)
+            self.tags[tag] = Tag(tag)
         else:
             self.replace_tag(tag)
 
     def has_tag(self, tag):
         return tag in self.tags
+
+    def get_tag(self, tag):
+        return self.tags[tag]
 
     def replace_tag(self, tag):
         if self.rep_policy == 'RR':

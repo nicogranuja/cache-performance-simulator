@@ -16,8 +16,6 @@ default_address_length = 4
 
 # Cache class gets initialized with the class
 # Arguments and calculates the cache main implementation
-
-
 class Cache:
     index_dict = {}
     total = 0
@@ -114,12 +112,9 @@ class Cache:
                 return
 
     def handle_trace(self, trace: Trace):
-        addr = Address(trace.address, offset_bits=self.block_offset_bits,
-                       index_bits=self.index_bits, tag_bits=self.tag_bits)
-        src_m = Address(trace.src_m, offset_bits=self.block_offset_bits,
-                        index_bits=self.index_bits, tag_bits=self.tag_bits)
-        dst_m = Address(trace.dst_m, offset_bits=self.block_offset_bits,
-                        index_bits=self.index_bits, tag_bits=self.tag_bits)
+        addr = Address(trace.address, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
+        src_m = Address(trace.src_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
+        dst_m = Address(trace.dst_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
 
         self.simulate_cache(addr, trace.length)
 
@@ -137,8 +132,7 @@ class Cache:
 
         else:
             # Save new index in dictionary
-            self.index_dict[addr.index] = Index(
-                tag=addr.tag, associativity=self.args.associativity, rep_policy=self.args.replacement_policy)
+            self.index_dict[addr.index] = Index(tag=addr.tag, associativity=self.args.associativity, rep_policy=self.args.replacement_policy)
             self.misses += 1
 
         self.total += 1
@@ -146,7 +140,7 @@ class Cache:
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
         # TODO figure out if tag exists for the index does the tag
         # get appended or it doesn't affect the array at all
-        if index.has_tag(addr.tag):
+        if index.has_tag(addr.tag) and index.get_tag(addr.tag).valid_bit_is_set():
             # is a hit
             self.hits += 1
         else:
