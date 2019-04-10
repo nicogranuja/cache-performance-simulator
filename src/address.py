@@ -22,8 +22,7 @@ class Address:
         self.is_valid = True
 
     def print_address(self):
-        print("addr", self.addr, "tag", self.tag,
-              "index", self.index, "offset", self.offset)
+        print("addr", self.addr, "tag", self.tag, "index", self.index, "offset", self.offset)
 
     # TODO Should return two values  as a tuple whether or not it overlaps
     # and the new index value
