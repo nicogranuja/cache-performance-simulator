@@ -146,7 +146,8 @@ class Cache:
             print ("HIT")
         else:
             # is a miss
-            index.add_or_replace_tag(addr.tag)
+            self.index_dict[addr.index].add_or_replace_tag(addr.tag)
+            # index.add_or_replace_tag(addr.tag)
             self.misses += 1
 
         # TODO if it overlaps call simulate_cache again
