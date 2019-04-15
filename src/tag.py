@@ -4,7 +4,7 @@ class Tag:
 
     def __init__(self, tag=''):
         self.tag = tag
-        self.valid_bit = 0
+        self.valid_bit = 1
 
     def set_valid_bit(self):
         self.valid_bit = 1

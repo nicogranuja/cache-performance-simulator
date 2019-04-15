@@ -109,7 +109,6 @@ class Cache:
 
                 trace = Trace(length, address, src_m, dst_m)
                 self.handle_trace(trace)
-                return
 
     def handle_trace(self, trace: Trace):
         addr = Address(trace.address, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
@@ -134,6 +133,7 @@ class Cache:
             # Save new index in dictionary
             self.index_dict[addr.index] = Index(tag=addr.tag, associativity=self.args.associativity, rep_policy=self.args.replacement_policy)
             self.misses += 1
+            print ("CUMPOLSORY MISS")
 
         self.total += 1
 
@@ -143,6 +143,7 @@ class Cache:
         if index.has_tag(addr.tag) and index.get_tag(addr.tag).valid_bit_is_set():
             # is a hit
             self.hits += 1
+            print ("HIT")
         else:
             # is a miss
             index.add_or_replace_tag(addr.tag)
