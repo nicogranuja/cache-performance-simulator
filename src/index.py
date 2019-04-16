@@ -1,4 +1,5 @@
 from .tag import Tag
+import random
 
 class Index:
     tags = []
@@ -53,7 +54,7 @@ class Index:
         # print()
 
     def replace_tag_RND(self, tag):
-        pass
+        self.tags[random.randrange(0, self.associativity)] = Tag(tag)
 
     def replace_tag_LRU(self, tag):
         pass
