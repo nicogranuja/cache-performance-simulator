@@ -133,9 +133,22 @@ class Cache:
             # Save new index in dictionary
             self.index_dict[addr.index] = Index(tag=addr.tag, associativity=self.args.associativity, rep_policy=self.args.replacement_policy)
             self.misses += 1
-            print ("CUMPOLSORY MISS")
+            # print ("***CUMPOLSORY MISS***")
 
         self.total += 1
+
+        # print()
+        # print("Current Index:")
+        # print(addr.index)
+        #
+        # print()
+        #
+        # print("Tags for index:")
+        # idx = self.index_dict[addr.index]
+        # for t in idx.tags:
+        #     print(t.tag)
+        #
+        # print()
 
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
         # TODO figure out if tag exists for the index does the tag
@@ -143,11 +156,10 @@ class Cache:
         if index.has_tag(addr.tag) and index.get_tag(addr.tag).valid_bit_is_set():
             # is a hit
             self.hits += 1
-            print ("HIT")
+            # print ("HIT")
         else:
             # is a miss
-            self.index_dict[addr.index].add_or_replace_tag(addr.tag)
-            # index.add_or_replace_tag(addr.tag)
+            index.add_or_replace_tag(addr.tag)
             self.misses += 1
 
         # TODO if it overlaps call simulate_cache again
