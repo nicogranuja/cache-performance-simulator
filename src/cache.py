@@ -72,7 +72,7 @@ class Cache:
         return int((cache_size + self.get_overhead_size()))
 
     def get_hit_rate(self):
-        return "TODO"
+        return self.hits / self.total
 
     # This method will fill up the array with traces objects based on the trace file
     def read_and_parse_trace_file(self):
