@@ -8,7 +8,6 @@ class Index:
     replace_index = 0
 
     def __init__(self, tag='', associativity=1, rep_policy='RR'):
-        self.tags = []
         self.tags.append(Tag(tag))
         self.associativity = associativity
         self.rep_policy = rep_policy
@@ -30,7 +29,7 @@ class Index:
         for t in self.tags:
             if t.tag == tag:
                 return t
-        return none
+        return None
 
     def replace_tag(self, tag):
         if self.rep_policy == 'RR':
@@ -50,4 +49,3 @@ class Index:
 
     def replace_tag_LRU(self, tag):
         pass
-
