@@ -36,7 +36,7 @@ class Cache:
         print("------------------------------------------------------------------------------------")
         print("Cache Size: {} KB\nBlock Size: {} bytes\nAssociativity: {}\nPolicy: {}\n".format(
             self.args.cache_size, self.args.block_size, self.args.associativity, self.args.replacement_policy))
-        print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {} bytes\nCache Hit Rate: {:.2f}%".format(
+        print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {} bytes\nCache Hit Rate: {}%".format(
             self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size(), self.get_hit_rate()))
 
     # Get offset bits
@@ -133,22 +133,8 @@ class Cache:
             # Save new index in dictionary
             self.index_dict[addr.index] = Index(tag=addr.tag, associativity=self.args.associativity, rep_policy=self.args.replacement_policy)
             self.misses += 1
-            # print ("***CUMPOLSORY MISS***")
 
         self.total += 1
-
-        # print()
-        # print("Current Index:")
-        # print(addr.index)
-        #
-        # print()
-        #
-        # print("Tags for index:")
-        # idx = self.index_dict[addr.index]
-        # for t in idx.tags:
-        #     print(t.tag)
-        #
-        # print()
 
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
         # TODO figure out if tag exists for the index does the tag
@@ -156,7 +142,6 @@ class Cache:
         if index.has_tag(addr.tag) and index.get_tag(addr.tag).valid_bit_is_set():
             # is a hit
             self.hits += 1
-            # print ("HIT")
         else:
             # is a miss
             index.add_or_replace_tag(addr.tag)

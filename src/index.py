@@ -15,12 +15,9 @@ class Index:
 
     def add_or_replace_tag(self, tag):
         # If we just need to add the tag
-
         if len(self.tags) < self.associativity:
             self.tags.append(Tag(tag))
-            # print ("TAG ADDED")
         else:
-            # print ("REPLACED TAG")
             self.replace_tag(tag)
 
     def has_tag(self, tag):
@@ -47,11 +44,6 @@ class Index:
     def replace_tag_RR(self, tag):
         self.tags[self.replace_index % self.associativity] = Tag(tag)
         self.replace_index += 1
-
-        # print("\nNew Tags")
-        # for t in self.tags:
-        #     print (t.tag)
-        # print()
 
     def replace_tag_RND(self, tag):
         self.tags[random.randrange(0, self.associativity)] = Tag(tag)
