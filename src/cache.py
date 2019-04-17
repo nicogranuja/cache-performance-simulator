@@ -162,4 +162,4 @@ class Cache:
         overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
         
         if overlaps:
-            self.simulate_cache(new_addr, 0)
+            self.simulate_cache(new_addr, 1)
