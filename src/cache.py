@@ -21,6 +21,8 @@ class Cache:
     total = 0
     hits = 0
     misses = 0
+    compulsory_misses = 0
+    conflict_misses = 0
 
     block_offset_bits = 0
     index_bits = 0
@@ -33,11 +35,17 @@ class Cache:
         self.tag_bits = self.get_tag_size()
 
     def print_results(self):
-        print("------------------------------------------------------------------------------------")
+        print("\n***** Cache Calculated Parameters *****\n")
         print("Cache Size: {} KB\nBlock Size: {} bytes\nAssociativity: {}\nPolicy: {}\n".format(
             self.args.cache_size, self.args.block_size, self.args.associativity, self.args.replacement_policy))
-        print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {} bytes\nCache Hit Rate: {:.2f}%".format(
-            self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size(), self.get_hit_rate()))
+        print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {}".format(
+            self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size()))
+        print("\n***** Cache Simulation Results *****\n")
+        print("Total Cache Accesses: {}\nCache Hits: {}\nCache Misses: {}\n--- Compulsory Misses: {}\n--- Conflict Misses: TODO {}".format(self.total, self.hits, self.misses, self.compulsory_misses, self.conflict_misses))
+        print("\n***** ***** CACHE MISS RATE ***** *****\n")
+        print("Cache Hit Rate: {}%".format(self.get_miss_rate()))
+        print("\n***** ***** CACHE HIT RATE ***** *****\n")
+        print("Cache Hit Rate: {}%".format(self.get_hit_rate()))
 
     # Get offset bits
     def get_block_offset(self):
@@ -73,6 +81,9 @@ class Cache:
 
     def get_hit_rate(self):
         return self.hits / self.total * 100
+
+    def get_miss_rate(self):
+        return self.misses / self.total * 100
 
     # This method will fill up the array with traces objects based on the trace file
     def read_and_parse_trace_file(self):
@@ -134,22 +145,9 @@ class Cache:
             # Save new index in dictionary
             self.index_dict[addr.index] = Index(tag=addr.tag, associativity=self.args.associativity, rep_policy=self.args.replacement_policy)
             self.misses += 1
-            # print ("***CUMPOLSORY MISS***")
+            self.compulsory_misses += 1
 
         self.total += 1
-
-        # print()
-        # print("Current Index:")
-        # print(addr.index)
-        #
-        # print()
-        #
-        # print("Tags for index:")
-        # idx = self.index_dict[addr.index]
-        # for t in idx.tags:
-        #     print(t.tag)
-        #
-        # print()
 
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
         # TODO figure out if tag exists for the index does the tag
@@ -157,15 +155,24 @@ class Cache:
         if index.has_tag(addr.tag) and index.get_tag(addr.tag).valid_bit_is_set():
             # is a hit
             self.hits += 1
-            # print ("HIT")
         else:
             # is a miss
             index.add_or_replace_tag(addr.tag)
             self.misses += 1
+        
+        overlaps, new_addr = addr.index_overlaps(length_read_bytes)
+        
+        if overlaps:
+            # Print overlap test
+            print("address value", int(addr.tag + addr.index + addr.offset, 2))
+            print("after adding read bytes", length_read_bytes)
+            print("new address value", int(addr.tag + addr.index + addr.offset, 2) + length_read_bytes)
+            print("old address bin", addr.addr)
+            print("new address bin", new_addr.addr)
+            print("old address:")
+            addr.print_address()
+            print("new address:")
+            new_addr.print_address()
+            print("overlap occurred\n")
 
-        # TODO if it overlaps call simulate_cache again
-        index_bool, new_index = addr.index_overlaps(length_read_bytes)
-        if index_bool:
-           self.simulate_cache(new_index, 0)
-
-
+            self.simulate_cache(new_addr, 0)

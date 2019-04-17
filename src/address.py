@@ -4,25 +4,18 @@ class Address:
     index = ''
     offset = ''
     addr = ''
-    overlap = ''
-    overlapCheck = ''
-    overlap_splice = ''
-    overlap_end = ''
     index_bits = 0
-    offset_bits = 0
     tag_bits = 0
-    index_bits_end = 0
-    print(overlap)
 
-    def __init__(self, addr='', offset_bits='', index_bits='', tag_bits=''):
+    def __init__(self, addr='', offset_bits='', index_bits=0, tag_bits=0):
         # Return default values for empty address (ignore)
         if int(addr, base=16) == 0:
             return
 
         self.addr = addr
-        self.tag_bits = tag_bits
         self.index_bits = index_bits
-        self.offset_bits = offset_bits
+        self.tag_bits = tag_bits
+
 
         index_bits_start = tag_bits + 1
         index_bits_end = index_bits_start + index_bits - 1
@@ -39,26 +32,13 @@ class Address:
     def print_address(self):
         print("addr", self.addr, "tag", self.tag, "index", self.index, "offset", self.offset)
 
-    # TODO Should return two values  as a tuple whether or not it overlaps
-    # and the new index value
     def index_overlaps(self, read_bytes):
-        test_index = self.index
-        index_length = "0%db" % (self.index_bits + self.offset_bits)
-        self.overlapCheck = format((int(self.overlap, 2) + read_bytes), index_length)
-        new_index = self.overlapCheck[:self.index_bits]
-        self.addr = self.tag + self.overlapCheck
-        self.index = new_index
-        print("length")
-        print(read_bytes)
-        #print(self.offset)
-        #print(self.overlap)
-        #print(self.overlapCheck)
+        new_addr_number = int(self.tag + self.index + self.offset, 2) + read_bytes
+        new_addr_bin = format(new_addr_number, '032b')
+        new_addr = Address(new_addr_bin, index_bits=self.index_bits, tag_bits=self.tag_bits)
 
-        if new_index == test_index:
-            #print("Returned false properly")
-            return False, ''
-        else:
-
-            #print("returned true properly")
-            return True, self
+        if self.index != new_addr.index:
+            return (True, new_addr)
+        
+        return (False, '')
 
