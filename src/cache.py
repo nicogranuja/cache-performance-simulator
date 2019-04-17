@@ -146,6 +146,11 @@ class Cache:
             self.misses += 1
             self.compulsory_misses += 1
 
+            overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
+            if overlaps:
+                self.simulate_cache(new_addr, 1)
+
+
         self.total += 1
 
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
