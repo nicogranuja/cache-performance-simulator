@@ -109,12 +109,14 @@ class Cache:
 
                 trace = Trace(length, address, src_m, dst_m)
                 self.handle_trace(trace)
+        print(self.total)
+        print(self.hits)
+        print(self.misses)
 
     def handle_trace(self, trace: Trace):
         addr = Address(trace.address, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
         src_m = Address(trace.src_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
         dst_m = Address(trace.dst_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
-
         self.simulate_cache(addr, trace.length)
 
         # If src_m and dst_m are valid addressess (greater than 00000000)
@@ -163,5 +165,8 @@ class Cache:
             self.misses += 1
 
         # TODO if it overlaps call simulate_cache again
-        if addr.index_overlaps(length_read_bytes):
-            pass
+        index_bool, new_index = addr.index_overlaps(length_read_bytes)
+        if index_bool:
+           self.simulate_cache(new_index, 0)
+
+
