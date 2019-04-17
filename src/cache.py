@@ -21,6 +21,8 @@ class Cache:
     total = 0
     hits = 0
     misses = 0
+    compulsory_misses = 0
+    conflict_misses = 0
 
     block_offset_bits = 0
     index_bits = 0
@@ -38,6 +40,8 @@ class Cache:
             self.args.cache_size, self.args.block_size, self.args.associativity, self.args.replacement_policy))
         print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {}".format(
             self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size()))
+        print("\n***** Cache Simulation Results *****\n")
+        print("Total Cache Accesses: {}\nCache Hits: {}\nCache Misses: {}\n--- Compulsory Misses: {}\n--- Conflict Misses: TODO {}".format(self.total, self.hits, self.misses, self.compulsory_misses, self.conflict_misses))
         print("\n***** ***** CACHE MISS RATE ***** *****\n")
         print("Cache Hit Rate: {}%".format(self.get_miss_rate()))
         print("\n***** ***** CACHE HIT RATE ***** *****\n")
@@ -140,6 +144,7 @@ class Cache:
             # Save new index in dictionary
             self.index_dict[addr.index] = Index(tag=addr.tag, associativity=self.args.associativity, rep_policy=self.args.replacement_policy)
             self.misses += 1
+            self.compulsory_misses += 1
 
         self.total += 1
 
