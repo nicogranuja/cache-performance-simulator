@@ -158,7 +158,20 @@ class Cache:
             # is a miss
             index.add_or_replace_tag(addr.tag)
             self.misses += 1
+        
+        overlaps, new_addr = addr.index_overlaps(length_read_bytes)
+        
+        if overlaps:
+            # Print overlap test
+            print("address value", int(addr.tag + addr.index + addr.offset, 2))
+            print("after adding read bytes", length_read_bytes)
+            print("new address value", int(addr.tag + addr.index + addr.offset, 2) + length_read_bytes)
+            print("old address bin", addr.addr)
+            print("new address bin", new_addr.addr)
+            print("old address:")
+            addr.print_address()
+            print("new address:")
+            new_addr.print_address()
+            print("overlap occurred\n")
 
-        # TODO if it overlaps call simulate_cache again
-        if addr.index_overlaps(length_read_bytes):
-            pass
+            self.simulate_cache(new_addr, 0)
