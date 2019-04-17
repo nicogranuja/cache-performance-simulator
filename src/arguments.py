@@ -32,10 +32,10 @@ class Arguments:
     def print_header(self):
         all_args = " ".join(sys.argv)
 
-        print("Cache Simulator CS 3853 Spring 2019 – Group #1\n")
-        print("Cmd Line: {}\nTrace File: {}\nCache Size: {} KB\nBlock Size: {} bytes\nAssociativity: {}\nR-Policy: {}\n".format(
-            all_args, self.file, self.cache_size, self.block_size, self.get_formatted_associativity(), self.replacement_policy))
-
+        print("Cache Simulator CS 3853 Spring 2019 – Group #1")
+        print("Cmd Line: {}Trace File: {}".format(all_args, self.file))
+        print("\n***** Cache Input Parameters *****\n")
+        print("Cache Size: {} KB\nBlock Size: {} bytes\nAssociativity: {}\nR-Policy: {}\n".format(self.cache_size, self.block_size, self.get_formatted_associativity(), self.replacement_policy))
     def get_formatted_associativity(self):
         associativity = str(self.associativity) + "-way"
 
