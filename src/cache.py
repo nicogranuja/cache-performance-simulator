@@ -33,11 +33,15 @@ class Cache:
         self.tag_bits = self.get_tag_size()
 
     def print_results(self):
-        print("------------------------------------------------------------------------------------")
+        print("\n***** Cache Calculated Parameters *****\n")
         print("Cache Size: {} KB\nBlock Size: {} bytes\nAssociativity: {}\nPolicy: {}\n".format(
             self.args.cache_size, self.args.block_size, self.args.associativity, self.args.replacement_policy))
-        print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {} bytes\nCache Hit Rate: {}%".format(
-            self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size(), self.get_hit_rate()))
+        print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {}".format(
+            self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size()))
+        print("\n***** ***** CACHE MISS RATE ***** *****\n")
+        print("Cache Hit Rate: {}%".format(self.get_miss_rate()))
+        print("\n***** ***** CACHE HIT RATE ***** *****\n")
+        print("Cache Hit Rate: {}%".format(self.get_hit_rate()))
 
     # Get offset bits
     def get_block_offset(self):
@@ -73,6 +77,9 @@ class Cache:
 
     def get_hit_rate(self):
         return self.hits / self.total * 100
+
+    def get_miss_rate(self):
+        return self.misses / self.total * 100
 
     # This method will fill up the array with traces objects based on the trace file
     def read_and_parse_trace_file(self):

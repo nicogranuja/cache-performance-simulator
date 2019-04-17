@@ -39,7 +39,6 @@ class Index:
         else:
             self.replace_tag_LRU(tag)
 
-    # TODO implement replacement methods on full index
     def replace_tag_RR(self, tag):
         self.tags[self.replace_index % self.associativity] = Tag(tag)
         self.replace_index += 1
