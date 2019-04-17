@@ -34,13 +34,7 @@ class Address:
         new_addr_bin = format(new_addr_number, '032b')
         new_addr = Address(new_addr_bin, index_bits=self.index_bits, tag_bits=self.tag_bits)
 
-        if self.addr_index_differ(self, new_addr):
+        if self.index != new_addr.index:
             return (True, new_addr)
         
         return (False, '')
-
-    def addr_index_differ(self, addr1, addr2):
-        if addr1.index != addr2.index:
-            return True
-        
-        return False            
