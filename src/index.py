@@ -12,12 +12,15 @@ class Index:
         self.associativity = associativity
         self.rep_policy = rep_policy
 
-    def add_or_replace_tag(self, tag):
+    def add_or_replace_tag(self, tag, compulsory_misses, conflict_misses):
         # If we just need to add the tag
         if len(self.tags) < self.associativity:
             self.tags.append(Tag(tag))
+            compulsory_misses += 1
         else:
             self.replace_tag(tag)
+            conflict_misses += 1
+        return (compulsory_misses, conflict_misses)
 
     def has_tag(self, tag):
         for t in self.tags:

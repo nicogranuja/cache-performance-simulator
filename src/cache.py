@@ -41,7 +41,7 @@ class Cache:
         print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {}".format(
             self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size()))
         print("\n***** Cache Simulation Results *****\n")
-        print("Total Cache Accesses: {}\nCache Hits: {}\nCache Misses: {}\n--- Compulsory Misses: {}\n--- Conflict Misses: TODO {}".format(self.total, self.hits, self.misses, self.compulsory_misses, self.conflict_misses))
+        print("Total Cache Accesses: {}\nCache Hits: {}\nCache Misses: {}\n--- Compulsory Misses: {}\n--- Conflict Misses: {}".format(self.total, self.hits, self.misses, self.compulsory_misses, self.conflict_misses))
         print("\n***** ***** CACHE MISS RATE ***** *****\n")
         print("Cache Hit Rate: {}%".format(self.get_miss_rate()))
         print("\n***** ***** CACHE HIT RATE ***** *****\n")
@@ -156,22 +156,10 @@ class Cache:
             self.hits += 1
         else:
             # is a miss
-            index.add_or_replace_tag(addr.tag)
+            self.compulsory_misses, self.conflict_misses = index.add_or_replace_tag(addr.tag, self.compulsory_misses, self.conflict_misses)
             self.misses += 1
         
-        overlaps, new_addr = addr.index_overlaps(length_read_bytes)
+        overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
         
         if overlaps:
-            # Print overlap test
-            print("address value", int(addr.tag + addr.index + addr.offset, 2))
-            print("after adding read bytes", length_read_bytes)
-            print("new address value", int(addr.tag + addr.index + addr.offset, 2) + length_read_bytes)
-            print("old address bin", addr.addr)
-            print("new address bin", new_addr.addr)
-            print("old address:")
-            addr.print_address()
-            print("new address:")
-            new_addr.print_address()
-            print("overlap occurred\n")
-
             self.simulate_cache(new_addr, 0)
