@@ -118,7 +118,6 @@ class Cache:
         src_m = Address(trace.src_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
         dst_m = Address(trace.dst_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
         self.simulate_cache(addr, trace.length)
-
         # If src_m and dst_m are valid addressess (greater than 00000000)
         if src_m.is_valid:
             self.simulate_cache(src_m, default_address_length)

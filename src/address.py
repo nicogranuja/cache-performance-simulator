@@ -42,16 +42,23 @@ class Address:
     # TODO Should return two values  as a tuple whether or not it overlaps
     # and the new index value
     def index_overlaps(self, read_bytes):
+        test_index = self.index
         index_length = "0%db" % (self.index_bits + self.offset_bits)
         self.overlapCheck = format((int(self.overlap, 2) + read_bytes), index_length)
         new_index = self.overlapCheck[:self.index_bits]
         self.addr = self.tag + self.overlapCheck
+        self.index = new_index
+        print("length")
+        print(read_bytes)
+        #print(self.offset)
+        #print(self.overlap)
+        #print(self.overlapCheck)
 
-        if new_index == self.index:
-            print("Returned false properly")
+        if new_index == test_index:
+            #print("Returned false properly")
             return False, ''
         else:
 
-            print("returned true properly")
+            #print("returned true properly")
             return True, self
 
