@@ -8,6 +8,7 @@ class Index:
     replace_index = 0
 
     def __init__(self, tag='', associativity=1, rep_policy='RR'):
+        self.tags = []
         self.tags.append(Tag(tag))
         self.associativity = associativity
         self.rep_policy = rep_policy

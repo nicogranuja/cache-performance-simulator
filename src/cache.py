@@ -138,6 +138,7 @@ class Cache:
         if addr.index in self.index_dict:
             # Handle index already in the dictionary
             index = self.index_dict[addr.index]
+
             self.handle_index_in_dict(index, addr, length_read_bytes)
 
         else:
