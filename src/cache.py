@@ -124,11 +124,6 @@ class Cache:
                 trace = Trace(length, address, src_m, dst_m)
                 self.total_read_bytes += trace.length
                 self.handle_trace(trace)
-        print(self.total)
-        print(self.hits)
-        print(self.misses)
-        print(self.total_read_bytes)
-        print(self.total_read_bytes, "<", self.args.cache_size * 1024)
 
     def handle_trace(self, trace: Trace):
         addr = Address(trace.address, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)

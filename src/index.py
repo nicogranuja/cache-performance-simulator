@@ -1,7 +1,4 @@
 from .tag import Tag
-#from .cache import Cache
-#from .arguments import Arguments
-
 import random
 
 class Index:

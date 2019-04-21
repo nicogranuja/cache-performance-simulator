@@ -21,13 +21,10 @@ class Address:
 
         index_bits_start = tag_bits + 1
         index_bits_end = index_bits_start + index_bits - 1
-        self.overlap_splice = tag_bits
-        self.overlap_end = index_bits_start + index_bits - 1
 
         self.tag = addr[0:tag_bits]
         self.index = addr[tag_bits:index_bits_end]
         self.offset = addr[index_bits_end:]
-        self.overlap = addr[tag_bits:]
 
         self.is_valid = True
 
@@ -44,4 +41,3 @@ class Address:
             return (True, new_addr)
         
         return (False, '')
-
