@@ -28,7 +28,6 @@ class Cache:
     index_bits = 0
     tag_bits = 0
     cache_size = 0
-    total_read_bytes = 0
 
     def __init__(self, args: Arguments):
         self.args = args
@@ -122,7 +121,6 @@ class Cache:
                 dst_m = format(int(regex2.group(2), base=16), '032b')
 
                 trace = Trace(length, address, src_m, dst_m)
-                self.total_read_bytes += trace.length
                 self.handle_trace(trace)
 
     def handle_trace(self, trace: Trace):
@@ -130,6 +128,7 @@ class Cache:
         src_m = Address(trace.src_m, index_bits=self.index_bits, tag_bits=self.tag_bits)
         dst_m = Address(trace.dst_m, index_bits=self.index_bits, tag_bits=self.tag_bits)
         self.simulate_cache(addr, trace.length)
+        
         # If src_m and dst_m are valid addressess (greater than 00000000)
         if src_m.is_valid:
             self.simulate_cache(src_m, default_address_length)
@@ -140,7 +139,6 @@ class Cache:
         if addr.index in self.index_dict:
             # Handle index already in the dictionary
             index = self.index_dict[addr.index]
-
             self.handle_index_in_dict(index, addr, length_read_bytes)
 
         else:
@@ -149,21 +147,18 @@ class Cache:
             self.misses += 1
             self.compulsory_misses += 1
 
-            overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
-            if overlaps:
-                self.simulate_cache(new_addr, 1)
+        overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
+        if overlaps:
+            self.simulate_cache(new_addr, 1)
+
         self.total += 1
 
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
-        if index.has_tag(addr.tag) and index.get_tag(addr.tag).valid_bit_is_set():
+        if index.has_tag(addr.tag):
             # is a hit
             self.hits += 1
         else:
             # is a miss
-            self.compulsory_misses, self.conflict_misses = index.add_or_replace_tag(addr.tag, self.compulsory_misses, self.conflict_misses, self.total_read_bytes, self.cache_size)
+            self.compulsory_misses, self.conflict_misses = index.add_or_replace_tag(addr.tag, self.compulsory_misses, self.conflict_misses)
             self.misses += 1
-        
-        overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
-        
-        if overlaps:
-            self.simulate_cache(new_addr, 1)
+    
