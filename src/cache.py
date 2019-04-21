@@ -126,9 +126,9 @@ class Cache:
                 self.handle_trace(trace)
 
     def handle_trace(self, trace: Trace):
-        addr = Address(trace.address, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
-        src_m = Address(trace.src_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
-        dst_m = Address(trace.dst_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
+        addr = Address(trace.address, index_bits=self.index_bits, tag_bits=self.tag_bits)
+        src_m = Address(trace.src_m, index_bits=self.index_bits, tag_bits=self.tag_bits)
+        dst_m = Address(trace.dst_m, index_bits=self.index_bits, tag_bits=self.tag_bits)
         self.simulate_cache(addr, trace.length)
         # If src_m and dst_m are valid addressess (greater than 00000000)
         if src_m.is_valid:
@@ -155,8 +155,6 @@ class Cache:
         self.total += 1
 
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
-        # TODO figure out if tag exists for the index does the tag
-        # get appended or it doesn't affect the array at all
         if index.has_tag(addr.tag) and index.get_tag(addr.tag).valid_bit_is_set():
             # is a hit
             self.hits += 1

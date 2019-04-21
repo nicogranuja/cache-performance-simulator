@@ -20,8 +20,9 @@ class Index:
             compulsory_misses += 1
         else:
             self.replace_tag(tag)
-            if total_bytes > cache_size:
-                conflict_misses += 1
+            conflict_misses += 1
+            # if total_bytes > cache_size:
+                # conflict_misses += 1
         return (compulsory_misses, conflict_misses)
 
     def has_tag(self, tag):
