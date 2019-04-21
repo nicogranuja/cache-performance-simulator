@@ -27,12 +27,15 @@ class Cache:
     block_offset_bits = 0
     index_bits = 0
     tag_bits = 0
+    cache_size = 0
+    total_read_bytes = 0
 
     def __init__(self, args: Arguments):
         self.args = args
         self.block_offset_bits = self.get_block_offset()
         self.index_bits = self.get_index_size()
         self.tag_bits = self.get_tag_size()
+        self.cache_size = args.cache_size
 
     def print_results(self):
         print("\n***** Cache Calculated Parameters *****\n")
@@ -41,7 +44,7 @@ class Cache:
         print("Total # of Blocks: {} KB\nTag Size: {} bits\nIndex Size: {}, Total Indices: {} KB\nOverhead Size: {} bytes\nImplementation Memory Size: {}".format(
             self.get_total_blocks(), self.get_tag_size(), self.get_index_size(), self.get_total_indices(), self.get_overhead_size(), self.get_imp_mem_size()))
         print("\n***** Cache Simulation Results *****\n")
-        print("Total Cache Accesses: {}\nCache Hits: {}\nCache Misses: {}\n--- Compulsory Misses: {}\n--- Conflict Misses: TODO {}".format(self.total, self.hits, self.misses, self.compulsory_misses, self.conflict_misses))
+        print("Total Cache Accesses: {}\nCache Hits: {}\nCache Misses: {}\n--- Compulsory Misses: {}\n--- Conflict Misses: {}".format(self.total, self.hits, self.misses, self.compulsory_misses, self.conflict_misses))
         print("\n***** ***** CACHE MISS RATE ***** *****\n")
         print("Cache Hit Rate: {}%".format(self.get_miss_rate()))
         print("\n***** ***** CACHE HIT RATE ***** *****\n")
@@ -119,15 +122,14 @@ class Cache:
                 dst_m = format(int(regex2.group(2), base=16), '032b')
 
                 trace = Trace(length, address, src_m, dst_m)
+                self.total_read_bytes += trace.length
                 self.handle_trace(trace)
 
     def handle_trace(self, trace: Trace):
         addr = Address(trace.address, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
         src_m = Address(trace.src_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
         dst_m = Address(trace.dst_m, offset_bits=self.block_offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
-
         self.simulate_cache(addr, trace.length)
-
         # If src_m and dst_m are valid addressess (greater than 00000000)
         if src_m.is_valid:
             self.simulate_cache(src_m, default_address_length)
@@ -138,6 +140,7 @@ class Cache:
         if addr.index in self.index_dict:
             # Handle index already in the dictionary
             index = self.index_dict[addr.index]
+
             self.handle_index_in_dict(index, addr, length_read_bytes)
 
         else:
@@ -146,6 +149,9 @@ class Cache:
             self.misses += 1
             self.compulsory_misses += 1
 
+            overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
+            if overlaps:
+                self.simulate_cache(new_addr, 1)
         self.total += 1
 
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
@@ -156,9 +162,10 @@ class Cache:
             self.hits += 1
         else:
             # is a miss
-            index.add_or_replace_tag(addr.tag)
+            self.compulsory_misses, self.conflict_misses = index.add_or_replace_tag(addr.tag, self.compulsory_misses, self.conflict_misses, self.total_read_bytes, self.cache_size)
             self.misses += 1
-
-        # TODO if it overlaps call simulate_cache again
-        if addr.index_overlaps(length_read_bytes):
-            pass
+        
+        overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
+        
+        if overlaps:
+            self.simulate_cache(new_addr, 1)

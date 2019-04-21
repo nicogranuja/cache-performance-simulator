@@ -5,12 +5,19 @@ class Address:
     offset = ''
     addr = ''
 
-    def __init__(self, addr='', offset_bits='', index_bits='', tag_bits=''):
+    tag_bits = 0
+    index_bits = 0
+    offset_bits = 0
+
+    def __init__(self, addr='', offset_bits='', index_bits=0, tag_bits=0):
         # Return default values for empty address (ignore)
         if int(addr, base=16) == 0:
             return
 
         self.addr = addr
+        self.index_bits = index_bits
+        self.tag_bits = tag_bits
+        self.offset_bits = offset_bits
 
         index_bits_start = tag_bits + 1
         index_bits_end = index_bits_start + index_bits - 1
@@ -24,7 +31,13 @@ class Address:
     def print_address(self):
         print("addr", self.addr, "tag", self.tag, "index", self.index, "offset", self.offset)
 
-    # TODO Should return two values  as a tuple whether or not it overlaps
-    # and the new index value
     def index_overlaps(self, read_bytes):
+        new_addr_number = int(self.tag + self.index + self.offset, 2) + read_bytes
+        new_addr_bin = format(new_addr_number, '032b')
+
+        new_addr = Address(new_addr_bin, offset_bits=self.offset_bits, index_bits=self.index_bits, tag_bits=self.tag_bits)
+
+        if self.index != new_addr.index:
+            return (True, new_addr)
+        
         return (False, '')
