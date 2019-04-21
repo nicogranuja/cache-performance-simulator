@@ -1,4 +1,7 @@
 from .tag import Tag
+#from .cache import Cache
+#from .arguments import Arguments
+
 import random
 
 class Index:
@@ -8,16 +11,21 @@ class Index:
     replace_index = 0
 
     def __init__(self, tag='', associativity=1, rep_policy='RR'):
+        self.tags = []
         self.tags.append(Tag(tag))
         self.associativity = associativity
         self.rep_policy = rep_policy
 
-    def add_or_replace_tag(self, tag):
+    def add_or_replace_tag(self, tag, compulsory_misses, conflict_misses, total_bytes, cache_size):
         # If we just need to add the tag
         if len(self.tags) < self.associativity:
             self.tags.append(Tag(tag))
+            compulsory_misses += 1
         else:
             self.replace_tag(tag)
+            if total_bytes > cache_size:
+                conflict_misses += 1
+        return (compulsory_misses, conflict_misses)
 
     def has_tag(self, tag):
         for t in self.tags:
