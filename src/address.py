@@ -32,10 +32,27 @@ class Address:
     def index_overlaps(self, read_bytes):
         new_addr_number = int(self.tag + self.index + self.offset, 2) + read_bytes
         new_addr_bin = format(new_addr_number, '032b')
-
         new_addr = Address(new_addr_bin, index_bits=self.index_bits, tag_bits=self.tag_bits)
 
         if self.index != new_addr.index:
-            return (True, new_addr)
+            addr, overlap_bytes = self.get_overlap_bytes(new_addr, read_bytes)
+            return (True, addr, overlap_bytes)
         
-        return (False, '')
+        return (False, '', 0)
+
+    def get_overlap_bytes(self, new_addr, read_bytes):
+        overlap_after = 1
+        tmp_addr_number = int(self.tag + self.index + self.offset, 2)
+
+        while overlap_after < read_bytes:
+            tmp_addr_number += overlap_after
+            tmp_addr_bin = format(tmp_addr_number, '032b')
+            tmp_addr = Address(tmp_addr_bin, index_bits=self.index_bits, tag_bits=self.tag_bits)
+
+            if self.index != tmp_addr.index:
+                return (tmp_addr, overlap_after)
+
+            overlap_after += 1
+
+        return (new_addr, 0)
+

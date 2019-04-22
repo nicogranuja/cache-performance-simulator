@@ -45,7 +45,7 @@ class Cache:
         print("\n***** Cache Simulation Results *****\n")
         print("Total Cache Accesses: {}\nCache Hits: {}\nCache Misses: {}\n--- Compulsory Misses: {}\n--- Conflict Misses: {}".format(self.total, self.hits, self.misses, self.compulsory_misses, self.conflict_misses))
         print("\n***** ***** CACHE MISS RATE ***** *****\n")
-        print("Cache Hit Rate: {}%".format(self.get_miss_rate()))
+        print("Cache Miss Rate: {}%".format(self.get_miss_rate()))
         print("\n***** ***** CACHE HIT RATE ***** *****\n")
         print("Cache Hit Rate: {}%".format(self.get_hit_rate()))
 
@@ -149,9 +149,9 @@ class Cache:
 
         self.total += 1
 
-        overlaps, new_addr = addr.index_overlaps(length_read_bytes - 1)
+        overlaps, new_addr, overlap_bytes = addr.index_overlaps(length_read_bytes - 1)
         if overlaps:
-            self.simulate_cache(new_addr, 1)  
+            self.simulate_cache(new_addr, length_read_bytes - 1 - overlap_bytes)
 
     def handle_index_in_dict(self, index: Index, addr: Address, length_read_bytes):
         if index.has_tag(addr.tag):
