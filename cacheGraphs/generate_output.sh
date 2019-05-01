@@ -15,13 +15,13 @@ default_r=RR
 
 function cache_size_change() {
     echo -e "\n*** Running Cache Change ***\n"
-    output_file="output/cache_changeZZZ.txt"
+    output_file="output/cache_change.txt"
     echo "Start" > $output_file
     s=1
     
     while [[ s -lt 8193 ]];do
         echo "executing with params -f $file -s $s -b $b -a $a -r $r"
-        ./sim.exe -f $file -s $s -b $b -a $a -r $r >> $output_file
+        wine sim.exe -f $file -s $s -b $b -a $a -r $r >> $output_file
         echo "BATCH END" >> $output_file
         
         s=$((2 * s))
@@ -39,7 +39,7 @@ function block_size_change() {
     
     while [[ b -lt 65 ]];do
         echo "executing with params -f $file -s $s -b $b -a $a -r $r"
-        ./sim.exe -f $file -s $s -b $b -a $a -r $r >> $output_file
+        wine sim.exe -f $file -s $s -b $b -a $a -r $r >> $output_file
         echo "BATCH END" >> $output_file
         
         b=$((2 * b))
@@ -57,7 +57,7 @@ function associativity_size_change() {
     
     while [[ a -lt 17 ]];do
         echo "executing with params -f $file -s $s -b $b -a $a -r $r"
-        ./sim.exe -f $file -s $s -b $b -a $a -r $r >> $output_file
+        wine sim.exe -f $file -s $s -b $b -a $a -r $r >> $output_file
         echo "BATCH END" >> $output_file
 
         a=$((2 * a))
