@@ -114,17 +114,46 @@ const plotAssociativityChange = () => {
 const plotCacheChangeWithAssociativity = () => {
   let promises = [];
   // Push all the generate traces files to the promises array (Don't forget to change the name)
-  promises.push(generateTrace('./output/cache_change_b2_a2_RR.txt', 'Cache Size', 'Block Offset 2'))
-  promises.push(generateTrace('./output/cache_change_b8_a2_RR.txt', 'Cache Size', 'Block Offset 8'))
-  promises.push(generateTrace('./output/cache_change_b32_a2_RR.txt', 'Cache Size', 'Block Offset 32'))
-   promises.push(generateTrace('./output/cache_change_b64_a2_RR.txt', 'Cache Size', 'Block Offset 64'))
+  promises.push(generateTrace('./output/cache_change_b2_a4_RR.txt', 'Cache Size', 'Block Offset 2'))
+  promises.push(generateTrace('./output/cache_change_b4_a4_RR.txt', 'Cache Size', 'Block Offset 8'))
+  promises.push(generateTrace('./output/cache_change_b32_a4_RR.txt', 'Cache Size', 'Block Offset 32'))
+  promises.push(generateTrace('./output/cache_change_b64_a4_RR.txt', 'Cache Size', 'Block Offset 64'))
 
   Promise.all(promises).then(traces => {
-    createGraph(traces, 'Miss Rate (%) VS. Cache Size B 2 8 32 64, A 2', 'Cache Size')
+    createGraph(traces, 'Miss Rate (%) VS. Cache Size B 2 8 32 64, A 4 RR', 'Cache Size')
   })
 };
 
-plotCacheChangeWithAssociativity()
+const plotBlockChange = () => {
+  let promises = [];
+  // Push all the generate traces files to the promises array (Don't forget to change the name)
+  promises.push(generateTrace('./output/block_change_s8_a_4_RR.txt', 'Block Size', 'Cache Size 8'))
+  promises.push(generateTrace('./output/block_change_s64_a_4_RR.txt', 'Block Size', 'Cache Size 64'))
+  promises.push(generateTrace('./output/block_change_s256_a_4_RR.txt', 'Block Size', 'Cache Size 256'))
+  promises.push(generateTrace('./output/block_change_s1024_a_4_RR.txt', 'Block Size', 'Cache Size 1024'))
+
+  Promise.all(promises).then(traces => {
+    createGraph(traces, 'Miss Rate (%) VS. Block Size S 8 64 256 1024, A 4, RR', 'Block Size')
+  })
+};
+
+const plotAssocChange = () => {
+  let promises = [];
+  // Push all the generate traces files to the promises array (Don't forget to change the name)
+  promises.push(generateTrace('./output/associativity_change_s64_b2_RR.txt', 'Associativity', 'Block Offset 2'))
+  promises.push(generateTrace('./output/associativity_change_s64_b16_RR.txt', 'Associativity', 'Block Offset 16'))
+  promises.push(generateTrace('./output/associativity_change_s64_b32_RR.txt', 'Associativity', 'Block Offset 32'))
+  promises.push(generateTrace('./output/associativity_change_s64_b64_RR.txt', 'Associativity', 'Block Offset 64'))
+
+  Promise.all(promises).then(traces => {
+    createGraph(traces, 'Miss Rate (%) VS. Associativity S 64, B 2 16 32 64, RR', 'Associativity')
+  })
+};
+
+
+// plotCacheChangeWithAssociativity()
+// plotBlockChange()
+plotAssocChange()
 
 // plotCacheChange()
 // plotBlockSizeChange()

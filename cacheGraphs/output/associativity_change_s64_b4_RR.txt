@@ -1,0 +1,181 @@
+Start
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			64 KB
+Block Size:			4 bytes
+Associativity:			1
+Replacement Policy:		Round Robin
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			16384
+Tag Size:			16 bits
+Total # Rows:			16384
+Index Size:			14 bits
+Implementation Memory Size:	98.00  KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	482641
+Cache Hits:		432942
+Cache Misses:		49699
+--- Compulsory Misses:	   15014
+--- Conflict Misses:	   34685
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 10.2973%
+
+BATCH END
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			64 KB
+Block Size:			4 bytes
+Associativity:			2
+Replacement Policy:		Round Robin
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			16384
+Tag Size:			17 bits
+Total # Rows:			8192
+Index Size:			13 bits
+Implementation Memory Size:	100.00 KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	482641
+Cache Hits:		437934
+Cache Misses:		44707
+--- Compulsory Misses:	   15923
+--- Conflict Misses:	   28784
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 9.2630%
+
+BATCH END
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			64 KB
+Block Size:			4 bytes
+Associativity:			4
+Replacement Policy:		Round Robin
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			16384
+Tag Size:			18 bits
+Total # Rows:			4096
+Index Size:			12 bits
+Implementation Memory Size:	102.00 KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	482641
+Cache Hits:		439768
+Cache Misses:		42873
+--- Compulsory Misses:	   16343
+--- Conflict Misses:	   26530
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 8.8830%
+
+BATCH END
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			64 KB
+Block Size:			4 bytes
+Associativity:			8
+Replacement Policy:		Round Robin
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			16384
+Tag Size:			19 bits
+Total # Rows:			2048
+Index Size:			11 bits
+Implementation Memory Size:	104.00 KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	482641
+Cache Hits:		440531
+Cache Misses:		42110
+--- Compulsory Misses:	   16384
+--- Conflict Misses:	   25726
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 8.7249%
+
+BATCH END
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			64 KB
+Block Size:			4 bytes
+Associativity:			16
+Replacement Policy:		Round Robin
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			16384
+Tag Size:			20 bits
+Total # Rows:			1024
+Index Size:			10 bits
+Implementation Memory Size:	106.00 KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	482641
+Cache Hits:		440748
+Cache Misses:		41893
+--- Compulsory Misses:	   16384
+--- Conflict Misses:	   25509
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 8.6800%
+
+BATCH END
