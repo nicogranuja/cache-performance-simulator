@@ -1,0 +1,181 @@
+Start
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			8 KB
+Block Size:			4 bytes
+Associativity:			2
+Replacement Policy:		Random
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			2048
+Tag Size:			20 bits
+Total # Rows:			1024
+Index Size:			10 bits
+Implementation Memory Size:	13.25  KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	482641
+Cache Hits:		394259
+Cache Misses:		88382
+--- Compulsory Misses:	   2048
+--- Conflict Misses:	   86334
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 18.3122%
+
+BATCH END
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			8 KB
+Block Size:			8 bytes
+Associativity:			2
+Replacement Policy:		Random
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			1024
+Tag Size:			20 bits
+Total # Rows:			512
+Index Size:			9 bits
+Implementation Memory Size:	10.63  KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	420288
+Cache Hits:		365417
+Cache Misses:		54871
+--- Compulsory Misses:	   1024
+--- Conflict Misses:	   53847
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 13.0556%
+
+BATCH END
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			8 KB
+Block Size:			16 bytes
+Associativity:			2
+Replacement Policy:		Random
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			512
+Tag Size:			20 bits
+Total # Rows:			256
+Index Size:			8 bits
+Implementation Memory Size:	9.31   KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	387850
+Cache Hits:		351523
+Cache Misses:		36327
+--- Compulsory Misses:	   512
+--- Conflict Misses:	   35815
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 9.3662%
+
+BATCH END
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			8 KB
+Block Size:			32 bytes
+Associativity:			2
+Replacement Policy:		Random
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			256
+Tag Size:			20 bits
+Total # Rows:			128
+Index Size:			7 bits
+Implementation Memory Size:	8.66   KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	373450
+Cache Hits:		346643
+Cache Misses:		26807
+--- Compulsory Misses:	   256
+--- Conflict Misses:	   26551
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 7.1782%
+
+BATCH END
+
+
+Cache Simulator - CS3853 - Instructor Version: 1.01
+
+Trace File: trace_files/A9.trc
+
+***** Cache Input Parameters *****
+
+Cache Size:			8 KB
+Block Size:			64 bytes
+Associativity:			2
+Replacement Policy:		Random
+
+***** Cache Calculated Parameters *****
+
+Total # Blocks:			128
+Tag Size:			20 bits
+Total # Rows:			64
+Index Size:			6 bits
+Implementation Memory Size:	8.33   KB
+
+
+***** Cache Simulation Results *****
+
+Total Cache Accesses:	366344
+Cache Hits:		343285
+Cache Misses:		23059
+--- Compulsory Misses:	   128
+--- Conflict Misses:	   22931
+
+
+***** *****  CACHE MISS RATE:  ***** *****
+
+Miss Rate = 6.2944%
+
+BATCH END

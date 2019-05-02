@@ -2,20 +2,20 @@
 
 file=trace_files/A9.trc
 # file=trace_files/Trace4.trc
-s=64
+s=1024
 b=64
-a=2
-r=RR
+a=4
+r=RND
 
 # Default values
 default_size=1024
 default_block=8
 default_a=2
-default_r=RR
+default_r=RND
 
 function cache_size_change() {
     echo -e "\n*** Running Cache Change ***\n"
-    output_file="output/cache_change_b64_a4_RR.txt"
+    output_file="output/cache_change_b64_a4_RND.txt"
     echo "Start" > $output_file
     s=1
     
@@ -33,7 +33,7 @@ function cache_size_change() {
 
 function block_size_change() {
     echo -e "\n*** Running Block Change ***\n"
-    output_file="output/block_change_s1024_a_4_RR.txt"
+    output_file="output/block_change_s8_a4_RND.txt"
     echo "Start" > $output_file
     b=4
     
@@ -68,5 +68,5 @@ function associativity_size_change() {
 }
 
 # cache_size_change
-# block_size_change
-associativity_size_change
+block_size_change
+# associativity_size_change
