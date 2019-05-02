@@ -8,5 +8,7 @@ https://plot.ly/~NicolasAlvarezMondragon/30/miss-rate-vs-associativity-s-64-b-2-
 
 https://plot.ly/~NicolasAlvarezMondragon/32/miss-rate-vs-cache-size-b-2-8-32-64-a-4-rnd/#/
 https://plot.ly/~NicolasAlvarezMondragon/34/miss-rate-vs-block-size-s-8-64-256-1024-a-2-rnd/#/
+https://plot.ly/~NicolasAlvarezMondragon/36/miss-rate-vs-block-size-s-8-64-256-1024-a-4-rnd/#/
+https://plot.ly/~NicolasAlvarezMondragon/38/miss-rate-vs-associativity-s-64-b-2-16-32-64-rnd/#/
 
 https://docs.google.com/document/d/1SOiImudD3ZQsfvNKrTnm2Z8QPRnadiaZlHEeicjGItE/edit?ts=5cca3bec
