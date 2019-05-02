@@ -12,19 +12,19 @@ const missRateStr = 'Miss Rate ='
 // };
 // Sample data
 // data = [trace1]
-const createGraph = (data, title, yTitle) => {
+const createGraph = (data, graphTitle, xAxisTitle) => {
   let graphOptions = {
     layout: {
-      title: title,
+      title: graphTitle,
       yaxis: {
         title: 'Miss Rate %'
       },
       xaxis: {
-        title: yTitle
+        title: xAxisTitle
       },
     },
     fileopt: "overwrite",
-    filename: yTitle
+    filename: graphTitle
   }
 
   plotly.plot(data, graphOptions, function (err, msg) {
@@ -69,11 +69,11 @@ const getValueFromString = (line, str) => {
   return num
 }
 
-const generateTrace = (filePath, traceName) => {
+const generateTrace = (filePath, valueFromCache, name) => {
   let trace = {
     x: [],
     y: [],
-    name: traceName,
+    name: name,
     type: 'scatter'
   }
   return new Promise((resolve, reject) => {
@@ -81,7 +81,7 @@ const generateTrace = (filePath, traceName) => {
       for (let i = 0; i < results.length; i++) {
         if (results[i].length <= 1) continue
 
-        let traceValue = getValueFromString(results[i], traceName + ':')
+        let traceValue = getValueFromString(results[i], valueFromCache + ':')
         let missRate = getValueFromString(results[i], missRateStr)
         trace.x.push(traceValue)
         trace.y.push(missRate)
@@ -110,6 +110,20 @@ const plotAssociativityChange = () => {
     createGraph([trace], 'Miss Rate (%) VS. Associativity', 'Associativity')
   })
 }
+
+const plotCacheChangeWithAssociativity = () => {
+  let promises = [];
+  // Push all the generate traces files to the promises array (Don't forget to change the name)
+  promises.push(generateTrace('./output/cache_change_a2.txt', 'Cache Size', 'Associativity 2'))
+  promises.push(generateTrace('./output/cache_change_a4.txt', 'Cache Size', 'Associativity 4'))
+  promises.push(generateTrace('./output/cache_change_a8.txt', 'Cache Size', 'Associativity 8'))
+
+  Promise.all(promises).then(traces => {
+    createGraph(traces, 'Miss Rate (%) VS. Cache Size A 2, 4, 8', 'Cache Size')
+  })
+};
+
+plotCacheChangeWithAssociativity()
 
 // plotCacheChange()
 // plotBlockSizeChange()
